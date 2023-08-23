@@ -17,6 +17,7 @@ def on_message(ws, message):
     symbol = adapted_trade["symbol"]  # Filter by symbol
     data = json.dumps(adapted_trade)
     r.zadd(symbol, {data: timestamp})  # Add received data to redis
+    print(adapted_trade)
 
 
 def on_error(ws, error):
