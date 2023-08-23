@@ -15,7 +15,15 @@ def get_order_book(symbol, limit):
     response = requests.get(base_url, params)  # Send request to Binance
     if response.status_code == 200:
         order_book_data = response.json()
-        data = json.dumps(order_book_data)
+        formatted_bids = [[float(format(float(price), '.2f')), float(format(float(quantity), '.2f'))] for price, quantity in order_book_data['bids']]
+        formatted_asks = [[float(format(float(price), '.2f')), float(format(float(quantity), '.2f'))] for price, quantity in order_book_data['asks']]
+        formatted_order_book_data = {
+            'lastUpdateId': order_book_data['lastUpdateId'],
+            'bids': formatted_bids,
+            'asks': formatted_asks
+        }
+
+        data = json.dumps(formatted_order_book_data)
         return data
     else:
         return None
