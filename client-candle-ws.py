@@ -6,11 +6,11 @@ async def consume_order_book():
     uri = "ws://localhost:8080"  # WebSocket server address
     async with websockets.connect(uri) as websocket:
         # Send a request for a specific symbol and limit
-        request_data = "BTCUSDT"
+        request_data = {"symbol": "BTCUSDT", "interval": "5m"}
 
         while True:
             try:
-                await websocket.send(request_data)
+                await websocket.send(json.dumps(request_data))
                 response = await websocket.recv()
                 order_book_data = json.loads(response)
                 # Process and use the order book data as needed
