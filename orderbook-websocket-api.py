@@ -31,9 +31,9 @@ def get_order_book(symbol, limit):
 
 async def echo(websocket, path):
     last_response = {}
+    req = await websocket.recv()  # Get symbol and limit from client
     while True:
         try:
-            req = await websocket.recv()  # Get symbol and limit from client
             data = json.loads(req)
             symbol = data["symbol"]
             limit = data["limit"]

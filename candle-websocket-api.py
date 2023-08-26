@@ -19,9 +19,10 @@ def get_last_data(symbol, interval):
 
 async def echo(websocket, path):
     last_response = {}
+    received = await websocket.recv()
     while True:
         try:
-            received = await websocket.recv()
+
             params = json.loads(received)   # Receive symbol of desired trade data
             symbol = params["symbol"]
             interval = params["interval"]
